@@ -2,21 +2,24 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] float rotationSpeed;
     [SerializeField] Animator anim;
     [SerializeField] Transform orientation;
     [SerializeField] SpeedController speedController;
+    [SerializeField] float speedRotation;
 
     public bool checkStaying = false;
 
     float moveSpeed;
     Vector2 playerInput;
-    Vector3 moveDirection;
     Rigidbody rb;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+    }
+
+    private void Update()
+    {
         moveSpeed = speedController.speed;
     }
 
@@ -27,36 +30,35 @@ public class PlayerController : MonoBehaviour
 
     void MovePlayer()
     {
-        PlayerDirection();
-        Moving();
-        RotatePlayer();
-        Animations();
+        Vector3 movement = new Vector3(playerInput.x, 0f, playerInput.y);
+        transform.Translate(movement * moveSpeed * Time.deltaTime, Space.World);
+        RotatePlayer(movement);
+        Animations(movement);
     }
 
-    void PlayerDirection()
+    void Animations(Vector3 movement)
     {
-        moveDirection = orientation.forward * playerInput.y + orientation.right * playerInput.x;
-    }
-    void Animations()
-    {
-        if (moveDirection == Vector3.zero)
+        if (movement == Vector3.zero)
         {
             anim.SetTrigger("Idle");
         }
-        else if (checkStaying == false && moveDirection != Vector3.zero)
+        else if (checkStaying == false && movement != Vector3.zero)
         {
             anim.SetTrigger("Run");
         }
     }
 
-    void Moving()
+    void RotatePlayer(Vector3 movement)
     {
-        rb.AddForce(moveDirection.normalized * moveSpeed, ForceMode.Force);
+        if (!ZeroPlayerInput())
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), speedRotation);
+        }
     }
 
-    void RotatePlayer()
+    bool ZeroPlayerInput()
     {
-        transform.Rotate((transform.up * playerInput.x) * rotationSpeed * Time.deltaTime);
+        return playerInput.Equals(Vector3.zero);
     }
 
     public void Move(InputAction.CallbackContext _context)
