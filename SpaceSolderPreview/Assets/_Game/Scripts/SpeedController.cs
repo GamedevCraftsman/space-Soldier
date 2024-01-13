@@ -61,8 +61,11 @@ public class SpeedController : MonoBehaviour
     {
         while (speed <= totalSpeed)
         {
-            Player().checkStaying = false;
-            Player().Anim().speed = speed / totalSpeed;
+            if (player != null)
+            {
+                Player().checkStaying = false;
+                Player().Anim().speed = speed / totalSpeed;
+            }
             yield return new WaitForSeconds(waitingSeconds);
             speed++;
         }
