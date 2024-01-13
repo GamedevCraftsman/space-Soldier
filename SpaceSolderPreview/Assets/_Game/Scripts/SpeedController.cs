@@ -35,14 +35,14 @@ public class SpeedController : MonoBehaviour
         if (collision.CompareTag("JoystickBg"))
         {
             StopSpeed();
+            Player().Anim().SetTrigger("Idle");
         }
     }
 
     void StopSpeed()
     {
-        speed = Stop();
-        Player().Anim().SetTrigger("Idle");
         Player().checkStaying = true;
+        speed = Stop();
     }
 
     PlayerController Player()
