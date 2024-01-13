@@ -11,13 +11,6 @@ public class PlayerController : MonoBehaviour
 
     float moveSpeed;
     Vector2 playerInput;
-    Rigidbody rb;
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-        rb.freezeRotation = true;
-    }
-
     private void Update()
     {
         moveSpeed = speedController.speed;
@@ -38,13 +31,13 @@ public class PlayerController : MonoBehaviour
 
     void Animations(Vector3 movement)
     {
-        if (movement == Vector3.zero)
+        if (moveSpeed == 0 && checkStaying == true)
         {
             anim.SetTrigger("Idle");
         }
-        else if (checkStaying == false && movement != Vector3.zero)
+        else if (checkStaying == false && moveSpeed != 0)
         {
-            anim.SetTrigger("Run");
+            Debug.Log("Run");
         }
     }
 

@@ -6,7 +6,7 @@ public class SpeedController : MonoBehaviour
     [SerializeField] float totalSpeed;
     [SerializeField] float waitingSeconds;
 
-    public float speed = 0;
+    public float speed;
 
     GameObject player;
     void Start()
@@ -18,15 +18,8 @@ public class SpeedController : MonoBehaviour
     {
         if (collision.CompareTag("JoystickBg"))
         {
+            Player().checkStaying = false;
             StartCoroutine(MiddleSpeed());
-        }
-    }
-
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("JoystickBg"))
-        {
-            StopSpeed();
         }
     }
 
@@ -35,14 +28,13 @@ public class SpeedController : MonoBehaviour
         if (collision.CompareTag("JoystickBg"))
         {
             StopSpeed();
-            Player().Anim().SetTrigger("Idle");
         }
     }
 
     void StopSpeed()
     {
-        Player().checkStaying = true;
         speed = Stop();
+        Player().checkStaying = true;
     }
 
     PlayerController Player()
@@ -59,15 +51,18 @@ public class SpeedController : MonoBehaviour
 
     IEnumerator MiddleSpeed()
     {
-        while (speed <= totalSpeed)
+        while (speed < totalSpeed)
         {
-            if (player != null)
+            if (player != null && Player().checkStaying == false)
             {
-                Player().checkStaying = false;
                 Player().Anim().speed = speed / totalSpeed;
+                yield return new WaitForSeconds(waitingSeconds);
+                speed++;
             }
-            yield return new WaitForSeconds(waitingSeconds);
-            speed++;
+            else
+            {
+                break;
+            }
         }
     }
 

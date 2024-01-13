@@ -42303,7 +42303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalSpeed: 5
   waitingSeconds: 0.05
-  speed: 0
+  speed: 0.1
 --- !u!58 &1323627437
 CircleCollider2D:
   m_ObjectHideFlags: 0
