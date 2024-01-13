@@ -47,7 +47,14 @@ public class SpeedController : MonoBehaviour
 
     PlayerController Player()
     {
-        return player.GetComponent<PlayerController>();
+        if (player != null)
+        {
+            return player.GetComponent<PlayerController>();
+        }
+        else
+        {
+            return null;
+        }
     }
 
     IEnumerator MiddleSpeed()
