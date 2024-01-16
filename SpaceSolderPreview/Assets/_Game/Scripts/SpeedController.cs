@@ -1,13 +1,17 @@
+using System.Collections;
 using UnityEngine;
 
 public class SpeedController : MonoBehaviour
 {
+    [SerializeField] float totalSpeed;
+    [SerializeField] float waitingSeconds;
+
     public float speed;
 
     GameObject player;
     void Start()
     {
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("User");
     }
 
     void OnTriggerExit2D(Collider2D collision)
@@ -15,6 +19,7 @@ public class SpeedController : MonoBehaviour
         if (collision.CompareTag("JoystickBg"))
         {
             Player().checkStaying = false;
+            StartCoroutine(MiddleSpeed());
         }
     }
 
@@ -23,18 +28,46 @@ public class SpeedController : MonoBehaviour
         if (collision.CompareTag("JoystickBg"))
         {
             StopSpeed();
-            Player().Anim().SetTrigger("Idle");
-            Player().checkStaying = true;
         }
+    }
+
+    void StopSpeed()
+    {
+        speed = Stop();
+        Player().checkStaying = true;
     }
 
     PlayerController Player()
     {
-        return player.GetComponent<PlayerController>();
+        if (player != null)
+        {
+            return player.GetComponent<PlayerController>();
+        }
+        else
+        {
+            return null;
+        }
     }
 
-    float StopSpeed()
+    IEnumerator MiddleSpeed()
     {
-        return speed = 0;
+        while (speed < totalSpeed)
+        {
+            if (player != null && Player().checkStaying == false)
+            {
+                Player().Anim().speed = speed / totalSpeed;
+                yield return new WaitForSeconds(waitingSeconds);
+                speed++;
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+    int Stop()
+    {
+        return 0;
     }
 }
