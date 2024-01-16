@@ -11,13 +11,10 @@ public class PlayerController : MonoBehaviour
 
     float moveSpeed;
     Vector2 playerInput;
-    private void Update()
-    {
-        moveSpeed = speedController.speed;
-    }
 
     void FixedUpdate()
     {
+        moveSpeed = speedController.speed;
         MovePlayer();
     }
 
@@ -37,7 +34,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (checkStaying == false && moveSpeed != 0)
         {
-            Debug.Log("Run");
+            anim.SetTrigger("Run");
         }
     }
 
