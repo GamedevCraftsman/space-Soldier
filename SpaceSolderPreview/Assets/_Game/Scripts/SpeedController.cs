@@ -5,10 +5,9 @@ public class SpeedController : MonoBehaviour
 {
     [SerializeField] float totalSpeed;
     [SerializeField] float waitingSeconds;
+    [SerializeField] GameObject player;
 
-    public float speed;
-
-    GameObject player;
+    public float speed;   
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("User");
@@ -18,7 +17,6 @@ public class SpeedController : MonoBehaviour
     {
         if (collision.CompareTag("JoystickBg"))
         {
-            Player().checkStaying = false;
             StartCoroutine(MiddleSpeed());
         }
     }
@@ -53,8 +51,9 @@ public class SpeedController : MonoBehaviour
     {
         while (speed < totalSpeed)
         {
-            if (player != null && Player().checkStaying == false)
+            if (player != null)
             {
+                Player().checkStaying = false;
                 Player().Anim().speed = speed / totalSpeed;
                 yield return new WaitForSeconds(waitingSeconds);
                 speed++;
