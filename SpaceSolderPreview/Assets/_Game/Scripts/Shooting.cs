@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 public class Shooting : MonoBehaviour
 {
     [SerializeField] GameObject flash;
@@ -8,9 +7,7 @@ public class Shooting : MonoBehaviour
     [SerializeField] float distance;
 
     const float totalDistance = 15;
-    [SerializeField] Button fire;
     bool isPressed;
-  
     void PlayerShootButton()
     {
         StartCoroutine(Flash());
@@ -24,7 +21,7 @@ public class Shooting : MonoBehaviour
         {
             distance = totalDistance;
         }
-        Debug.DrawRay(ray.origin, ray.direction * distance, Color.red, 1);
+        Debug.DrawRay(ray.origin, ray.direction * distance, Color.red, 1); // delete in future.
     }
 
     IEnumerator Flash()
@@ -36,6 +33,7 @@ public class Shooting : MonoBehaviour
             flash.SetActive(false);
         }
     }
+
     public void OnUpdateSelected()
     {
         if (isPressed)
@@ -43,13 +41,14 @@ public class Shooting : MonoBehaviour
             PlayerShootButton();
         }
     }
+
     public void OnPointerDown()
     {
         isPressed = true;
     }
+
     public void OnPointerUp()
     {
         isPressed = false;
     }
-
 }
