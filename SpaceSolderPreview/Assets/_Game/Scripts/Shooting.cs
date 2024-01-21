@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 public class Shooting : MonoBehaviour
 {
     [SerializeField] GameObject flash;
@@ -7,16 +8,10 @@ public class Shooting : MonoBehaviour
     [SerializeField] float distance;
 
     const float totalDistance = 15;
-
-    private void Update()
-    {
-        if (Input.GetButton("Fire1"))
-        {
-            PlayerShootButton();
-        }
-    }
-
-    public void PlayerShootButton()
+    [SerializeField] Button fire;
+    bool isPressed;
+  
+    void PlayerShootButton()
     {
         StartCoroutine(Flash());
         Ray ray = new Ray(spawn.position, spawn.up);
@@ -41,4 +36,20 @@ public class Shooting : MonoBehaviour
             flash.SetActive(false);
         }
     }
+    public void OnUpdateSelected()
+    {
+        if (isPressed)
+        {
+            PlayerShootButton();
+        }
+    }
+    public void OnPointerDown()
+    {
+        isPressed = true;
+    }
+    public void OnPointerUp()
+    {
+        isPressed = false;
+    }
+
 }
