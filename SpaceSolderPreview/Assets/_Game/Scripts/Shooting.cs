@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Shooting : MonoBehaviour
 {
-    [SerializeField] int maxCountOfDecals;   
+    [SerializeField] int maxCountOfDecals;
     [SerializeField] float distance;
-    [SerializeField] float secondsToRemoveFire;   
+    [SerializeField] float secondsToRemoveFire;
     [SerializeField] GameObject shootingFireParts;
     [SerializeField] GameObject bulletHole;
     [SerializeField] GameObject flash;
     [SerializeField] Transform spawn;
 
     List<GameObject> decals = new List<GameObject>();
-    List<GameObject> fires = new List<GameObject> ();
+    List<GameObject> fires = new List<GameObject>();
 
     int countOfDecals = 0;
     const float totalDistance = 15;
     bool isPressed;
     GameObject shootingFire;
-    GameObject decal;   
+    GameObject decal;
     void PlayerShootButton()
     {
         StartCoroutine(Flash());
