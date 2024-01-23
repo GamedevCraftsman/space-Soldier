@@ -28,11 +28,11 @@ public class PlayerController : MonoBehaviour
 
     void Animations(Vector3 movement)
     {
-        if (moveSpeed == 0 && checkStaying == true)
+        if (movement == Vector3.zero && checkStaying == true)
         {
             anim.SetTrigger("Idle");
         }
-        else if (checkStaying == false && moveSpeed != 0)
+        else if (movement != Vector3.zero && checkStaying == false)
         {
             anim.SetTrigger("Run");
         }

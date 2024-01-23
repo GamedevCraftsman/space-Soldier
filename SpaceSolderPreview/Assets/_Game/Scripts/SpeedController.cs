@@ -7,7 +7,7 @@ public class SpeedController : MonoBehaviour
     [SerializeField] float waitingSeconds;
     [SerializeField] GameObject player;
 
-    public float speed;   
+    public float speed;
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("User");
